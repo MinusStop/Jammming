@@ -3,10 +3,12 @@ import './App.css';
 import {SearchBar} from '../SearchBar/SearchBar'
 import {SearchResults} from '../SearchResults/SearchResults'
 import {Playlist} from '../Playlist/Playlist'
+import { Track } from '../Track/Track';
 
 class App extends React.Component {
   constructor(props) {
     super(props)
+    this.addTrack = this.addTrack.bind(this);
     this.state = {
       searchResults: [
         {
@@ -27,9 +29,39 @@ class App extends React.Component {
           album: 'album3',
           id: 3
         }
-      ]
+      ],
+
+      playlistName: 'Test Playlist',
+      playlistTracks: [
+        {
+          name: 'playlist1',
+          artist: 'artist1',
+          album: 'album1',
+          id: 1
+        },
+        {
+          name: 'playlist2',
+          artist: 'artist2',
+          album: 'album2',
+          id: 2
+        },
+        {
+          name: 'playlist3',
+          artist: 'artist3',
+          album: 'album3',
+          id: 3
+        }
+      ],
     };
   };
+
+  addTrack(track){
+    if(this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id)) {
+      return;
+    } else {
+      this.setState({playlistTracks: track})
+    }
+  }
 
   render() {
     return (
@@ -38,8 +70,8 @@ class App extends React.Component {
       <div className="App">
         <SearchBar />
         <div className="App-playlist">
-          <SearchResults searchResults={this.state.searchResults}/>
-          <Playlist />
+          <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} />
+          <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks} />
         </div>
       </div>
     </div>
