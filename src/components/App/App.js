@@ -8,7 +8,6 @@ import { Track } from '../Track/Track';
 class App extends React.Component {
   constructor(props) {
     super(props)
-    this.addTrack = this.addTrack.bind(this);
     this.state = {
       searchResults: [
         {
@@ -37,30 +36,34 @@ class App extends React.Component {
           name: 'playlist1',
           artist: 'artist1',
           album: 'album1',
-          id: 1
+          id: 4
         },
         {
           name: 'playlist2',
           artist: 'artist2',
           album: 'album2',
-          id: 2
+          id: 5
         },
         {
           name: 'playlist3',
           artist: 'artist3',
           album: 'album3',
-          id: 3
+          id: 6
         }
       ],
     };
+
+    this.addTrack = this.addTrack.bind(this);
   };
 
   addTrack(track){
-    if(this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id)) {
+    let tracks = this.state.playlistTracks;
+    if(tracks.find(savedTrack => savedTrack.id === track.id)){
       return;
-    } else {
-      this.setState({playlistTracks: track})
     }
+
+    tracks.push(track)
+    this.setState({playlistTracks: tracks});
   }
 
   render() {
